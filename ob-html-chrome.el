@@ -2,8 +2,8 @@
 
 ;; Author: Nik Clayton nik@ngo.org.uk
 ;; URL: http://github.com/nikclayton/ob-html-chrome
-;; Version: 1.0
-;; Package-Requires: ((emacs "24.4") org ob ob-eval f s)
+;; Version: 1.1
+;; Package-Requires: ((emacs "24.4") (f "0.20.0") (s "1.7.0"))
 ;; Keywords: languages, org, org-babel, chrome, html
 
 ;;; Commentary:
