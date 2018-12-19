@@ -41,8 +41,9 @@
   (let* ((processed-params (org-babel-process-params params))
 	 (org-babel-temporary-directory default-directory)
 	 (html-file (org-babel-temp-file "ob-html-chrome" ".html"))
-	 (html-file-url
-	  (concat "file://" (org-babel-process-file-name html-file)))
+	 (url
+	  (or (cdr (assoc :url processed-params))
+	      (concat "file://" (org-babel-process-file-name html-file))))
 	 (out-file-base
 	  (or (cdr (assoc :file processed-params)) ; :file arg
 	      (nth 4 (org-babel-get-src-block-info)) ; #+NAME of block
@@ -57,7 +58,7 @@
 		 ,flags
 		 ,(format "--screenshot=%s"
 			  (org-babel-process-file-name out-file))
-		 ,html-file-url))))
+		 ,url))))
     (with-temp-file html-file
       (insert body))
     (org-babel-eval cmd "")

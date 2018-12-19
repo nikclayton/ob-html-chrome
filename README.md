@@ -222,6 +222,30 @@ output.
 #+END_SRC
 ```
 
+### `:url`
+
+The `:url` argument takes a screenshot of the URL given by the argument,
+not the contents of the block.
+
+#### `:url` examples
+
+This example takes a screenshot of https://www.gnu.org/software/emacs.
+
+``` org
+#+NAME: emacs-org
+#+BEGIN_SRC html-chrome :url https://www.gnu.org/software/emacs
+#+END_SRC
+```
+
+This example takes a screenshot of the file `html/test.html` relative
+to the location of the `.org` file.
+
+``` org
+#+NAME: test
+#+BEGIN_SRC html-chrome :url (shell-quote-argument (expand-file-name "html/test.html"))
+#+END_SRC
+```
+
 ## Displaying images inline
 
 If your Emacs is configured to show images you can enable this in Org
