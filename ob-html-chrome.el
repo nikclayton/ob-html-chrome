@@ -39,8 +39,11 @@
   (let* ((processed-params (org-babel-process-params params))
          (org-babel-temporary-directory default-directory)
          (html-file (org-babel-temp-file "ob-html-chrome" ".html"))
-         (url (or (cdr (assoc :url processed-params))
-                  (concat "file://" (org-babel-process-file-name html-file))))
+         (url-header-arg (cdr (assoc :url processed-params)))
+         (url (if (and url-header-arg
+                       (org-file-url-p url-header-arg))
+                  url-header-arg
+                (concat "file://" (org-babel-process-file-name html-file))))
          (out-file (or (cdr (assoc :file processed-params)) ; :file arg
                        ;; use the #+NAME of block
                        (concat (nth 4 (org-babel-get-src-block-info)) ".png")
