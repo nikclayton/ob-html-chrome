@@ -42,11 +42,11 @@
          (html-file (org-babel-temp-file "ob-html-chrome" ".html"))
          (url (or (cdr (assoc :url processed-params))
                   (concat "file://" (org-babel-process-file-name html-file))))
-         (out-file-base
-          (or (cdr (assoc :file processed-params)) ; :file arg
-              (nth 4 (org-babel-get-src-block-info)) ; #+NAME of block
-              (s-dashed-words (nth 4 (org-heading-components))))) ; Heading
-         (out-file (concat out-file-base ".png"))
+         (out-file (or (cdr (assoc :file processed-params)) ; :file arg
+                       ;; use the #+NAME of block
+                       (concat (nth 4 (org-babel-get-src-block-info)) ".png")
+                       ;; use the Heading
+                       (concat (s-dashed-words (nth 4 (org-heading-components))) ".png")))
          (flags (cdr (assoc :flags processed-params)))
          (cmd (s-join
                " "
