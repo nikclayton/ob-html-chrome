@@ -3,7 +3,7 @@
 ;; Author: Nik Clayton nik@ngo.org.uk
 ;; URL: http://github.com/nikclayton/ob-html-chrome
 ;; Version: 1.1
-;; Package-Requires: ((emacs "24.4") (s "1.7.0"))
+;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: languages, org, org-babel, chrome, html
 
 ;;; Commentary:
@@ -17,7 +17,6 @@
 (require 'org)
 (require 'ob)
 (require 'ob-eval)
-(require 's)
 
 (defcustom org-babel-html-chrome-chrome-executable
   ""
@@ -46,17 +45,22 @@
                        ;; use the #+NAME of block
                        (concat (nth 4 (org-babel-get-src-block-info)) ".png")
                        ;; use the Heading
-                       (concat (s-dashed-words (nth 4 (org-heading-components))) ".png")))
+                       (concat
+                        (string-join
+                         (mapcar 'downcase
+                                 (split-string
+                                  (nth 4 (org-heading-components)) " ")) "-")
+                        ".png")))
          (flags (cdr (assoc :flags processed-params)))
-         (cmd (s-join
-               " "
+         (cmd (string-join
                `(,(shell-quote-argument
                    org-babel-html-chrome-chrome-executable)
                  ,@'("--headless" "--disable-gpu" "--enable-logging")
                  ,flags
                  ,(format "--screenshot=%s"
                           (org-babel-process-file-name out-file))
-                 ,url))))
+                 ,url)
+               " ")))
     (with-temp-file html-file
       (insert body))
     (org-babel-eval cmd "")
