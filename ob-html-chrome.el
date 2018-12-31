@@ -29,7 +29,7 @@
 (add-to-list 'org-src-lang-modes (quote ("html-chrome" . html)))
 
 (defvar org-babel-default-header-args:html-chrome
-  '((:results . "file") (:exports . "both"))
+  '((:results . "file graphics") (:exports . "both"))
   "Default arguments to use when evaluating a html-chrome SRC block.")
 
 (defun org-babel-execute:html-chrome (body params)
