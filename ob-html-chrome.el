@@ -3,7 +3,7 @@
 ;; Author: Nik Clayton nik@ngo.org.uk
 ;; URL: http://github.com/nikclayton/ob-html-chrome
 ;; Version: 1.1
-;; Package-Requires: ((emacs "24.4") (f "0.20.0") (s "1.7.0"))
+;; Package-Requires: ((emacs "24.4") (s "1.7.0"))
 ;; Keywords: languages, org, org-babel, chrome, html
 
 ;;; Commentary:
@@ -17,7 +17,6 @@
 (require 'org)
 (require 'ob)
 (require 'ob-eval)
-(require 'f)
 (require 's)
 
 (defcustom org-babel-html-chrome-chrome-executable
@@ -36,7 +35,7 @@
 
 (defun org-babel-execute:html-chrome (body params)
   "Render the HTML in BODY using PARAMS."
-  (unless (f-executable? org-babel-html-chrome-chrome-executable)
+  (unless (file-executable-p org-babel-html-chrome-chrome-executable)
     (error "Can not export HTML: `%s' (specified by org-babel-html-chrome-chrome-executable) does not exist or is not executable" org-babel-html-chrome-chrome-executable))
   (let* ((processed-params (org-babel-process-params params))
 	 (org-babel-temporary-directory default-directory)
