@@ -37,7 +37,7 @@
   (unless (file-executable-p org-babel-html-chrome-chrome-executable)
     (error "Can not export HTML: `%s' (specified by org-babel-html-chrome-chrome-executable) does not exist or is not executable" org-babel-html-chrome-chrome-executable))
   (let* ((processed-params (org-babel-process-params params))
-         (org-babel-temporary-directory default-directory)
+         (org-babel-temporary-directory (temporary-file-directory))
          (html-file (org-babel-temp-file "ob-html-chrome" ".html"))
          (url-header-arg (cdr (assoc :url processed-params)))
          (url (if (and url-header-arg
